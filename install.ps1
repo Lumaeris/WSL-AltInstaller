@@ -1,7 +1,6 @@
 Set-StrictMode -Off;
 
-### Various checks
-
+#region Initial checks
 $platform = [string][System.Environment]::OSVersion.Platform
 if(!($platform.StartsWith("Win"))) {
 	[console]::error.writeline("WSL-AltInstaller: This script works and is intended only for the Windows system.")
@@ -29,11 +28,7 @@ if([System.Environment]::UserName -eq "Administrator") {
 	exit 1
 }
 
-function is_elevated {
-	return ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-if(!(is_elevated)) {
+if(!([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
 	[console]::error.writeline("WSL-AltInstaller: PowerShell was not run as an Administrator.")
 	exit 1
 }
@@ -42,8 +37,7 @@ if(!((Get-NetConnectionProfile).IPv4Connectivity -contains "Internet" -or (Get-N
 	[console]::error.writeline("WSL-AltInstaller: This script requires a stable Internet connection.")
 	exit 1
 }
-
-### END: Various checks
+#endregion
 
 $prevdir = (Get-Location).Path
 $tempdir = [System.IO.Path]::GetTempPath()
