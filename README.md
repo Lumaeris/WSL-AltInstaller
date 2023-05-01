@@ -1,10 +1,10 @@
 # [WIP] WSL-AltInstaller
 
-This script installs WSL 2 and Ubuntu to the system after system ["amelioration"](https://ameliorated.io) (or if "wsl --install" does not work for some reason).
+This script installs WSL 2 and Ubuntu to the system after system ["amelioration"](https://ameliorated.io) (or if `wsl --install` does not work for some reason).
 
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-irm github.com/Lumaeris/WSL-AltInstaller/raw/main/install.ps1 | iex
+irm lumaeris.me/wsl | iex
 ```
 
 ## Known issues
