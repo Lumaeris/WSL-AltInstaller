@@ -42,19 +42,19 @@ if(!((Get-NetConnectionProfile).IPv4Connectivity -contains "Internet" -or (Get-N
 $prevdir = (Get-Location).Path
 $tempdir = [System.IO.Path]::GetTempPath()
 Set-Location $tempdir
-New-Item -Path "WSL-AltInstaller" -ItemType "directory" -Force > $null
+New-Item -Path "WSL-AltInstaller" -ItemType "directory" -Force | Out-Null
 Set-Location "WSL-AltInstaller"
 
 if ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -ne 'Enabled'){
 	"Enabling 'Virtual Machine Platform'..."
-    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName VirtualMachinePlatform -LimitAccess > $null
+    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName VirtualMachinePlatform -LimitAccess | Out-Null
 } else {
     "Virtual Machine Platform was already enabled."
 }
 
 if ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -ne 'Enabled'){
     "Enabling 'Windows Subsystem for Linux'..."
-    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName Microsoft-Windows-Subsystem-Linux -LimitAccess > $null
+    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName Microsoft-Windows-Subsystem-Linux -LimitAccess | Out-Null
 } else {
     "Windows Subsystem for Linux was already enabled."
 }
