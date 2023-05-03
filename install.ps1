@@ -40,10 +40,9 @@ if(!((Get-NetConnectionProfile).IPv4Connectivity -contains "Internet" -or (Get-N
 #endregion
 
 $prevdir = (Get-Location).Path
-$tempdir = [System.IO.Path]::GetTempPath()
+$tempdir = [System.IO.Path]::GetTempPath() + "\WSL-AltInstaller"
+New-Item -Path $tempdir -ItemType "directory" -Force | Out-Null
 Set-Location $tempdir
-New-Item -Path "WSL-AltInstaller" -ItemType "directory" -Force | Out-Null
-Set-Location "WSL-AltInstaller"
 
 if ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -ne 'Enabled'){
 	"Enabling 'Virtual Machine Platform'..."
