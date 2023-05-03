@@ -65,8 +65,7 @@ if ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem
 }
 
 $aria2 = Invoke-RestMethod -Uri https://api.github.com/repos/aria2/aria2/releases/latest | Select-Object -ExpandProperty assets | Select-Object -expand browser_download_url
-$aria2link = $aria2[2]
-Invoke-WebRequest $aria2link -OutFile "aria2.zip"
+Invoke-WebRequest $aria2[2] -OutFile "aria2.zip"
 Expand-Archive .\aria2.zip
 Move-Item "aria2\*\aria2c.exe" .
 Remove-Item -LiteralPath "aria2" -Force -Recurse
@@ -74,14 +73,14 @@ Remove-Item -LiteralPath "aria2.zip"
 
 if(!((Get-AppPackage).Name -like "*WindowsSubsystemForLinux*")) {
 	$wsl = Invoke-RestMethod -Uri https://api.github.com/repos/microsoft/WSL/releases
-	$wsllink = $wsl[0] | Select-Object -ExpandProperty assets | Select-Object -expand browser_download_url
+	$wsl = $wsl[0] | Select-Object -ExpandProperty assets | Select-Object -expand browser_download_url
 
-	& ".\aria2c.exe" "-x16" "-k4M" $wsllink "-o" "wsl.msixbundle"
+	& ".\aria2c.exe" "-x16" "-s16" "-k4M" $wsl "-o" "wsl.msixbundle"
 	Add-AppxPackage "wsl.msixbundle"
 }
 
 if(!((Get-AppPackage).Name -like "*Ubuntu*")) {
-	& ".\aria2c.exe" "-x16" "-k4M" "https://aka.ms/wslubuntu" "-o" "ubuntu.appxbundle"
+	& ".\aria2c.exe" "-x16" "-s16" "-k4M" "https://aka.ms/wslubuntu" "-o" "ubuntu.appxbundle"
 	Add-AppxPackage "ubuntu.appxbundle"
 }
 
