@@ -46,14 +46,20 @@ Set-Location $tempdir
 
 if ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -ne 'Enabled'){
 	"Enabling 'Virtual Machine Platform'..."
-    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName VirtualMachinePlatform -LimitAccess | Out-Null
+    $vmfeature = Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName VirtualMachinePlatform -LimitAccess | Out-Null
+	if($vmfeature.Restartneeded -eq $true) {
+		$rebootReq = $true
+	}
 } else {
     "Virtual Machine Platform was already enabled."
 }
 
 if ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -ne 'Enabled'){
     "Enabling 'Windows Subsystem for Linux'..."
-    Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName Microsoft-Windows-Subsystem-Linux -LimitAccess | Out-Null
+    $wslfeature = Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName Microsoft-Windows-Subsystem-Linux -LimitAccess | Out-Null
+	if($wslfeature.Restartneeded -eq $true) {
+		$rebootReq = $true
+	}
 } else {
     "Windows Subsystem for Linux was already enabled."
 }
@@ -79,8 +85,11 @@ if(!((Get-AppPackage).Name -like "*Ubuntu*")) {
 	Add-AppxPackage "ubuntu.appxbundle"
 }
 
-Set-Location ..
-Remove-Item -LiteralPath "WSL-AltInstaller" -Force -Recurse
 Set-Location $prevdir
+Remove-Item -LiteralPath $tempdir -Force -Recurse
 
-"WSL-AltInstaller: The requested operation is successful (hopefully). Changes will not be effective until the system is rebooted."
+if($rebootReq) {
+	"WSL-AltInstaller: The requested operation is successful (hopefully). Changes will not be effective until the system is rebooted."
+} else {
+	"WSL-AltInstaller: The requested operation is successful (hopefully)."
+}
