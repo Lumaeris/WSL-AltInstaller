@@ -8,5 +8,5 @@ irm lumaeris.me/wsl | iex
 ```
 
 ## Known issues
-- "The service has not been started" appeared during testing for no reason. I was installing WSL and Ubuntu in about the same way the script does. I need to perform some testing...
+- "The service has not been started" appeared during testing for no reason. The error may be due to changes applied by [Hardentools](https://github.com/securitywithoutborders/hardentools) or caused by [previous versions](https://github.com/jbara2002/windows-defender-remover/issues/38) of [Windows Defender Remover](https://github.com/jbara2002/windows-defender-remover).
 - **Very** limited functionality.
