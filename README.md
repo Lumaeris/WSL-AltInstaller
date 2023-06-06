@@ -4,7 +4,7 @@ This script installs WSL 2 and Ubuntu to the system after system ["amelioration"
 
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-irm lumaeris.me/wsl | iex
+irm lum.lol/wsl | iex
 ```
 
 ## Known issues
