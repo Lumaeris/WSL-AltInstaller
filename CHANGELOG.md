@@ -1,3 +1,17 @@
+## v0.0.2-alpha - 2023-09-26
+
+Added an interactive menu and a small description before installation.
+
+### Key changes
+- aria2 is no longer downloaded if there is an already installed copy on the system.
+- Added option to install old version of WSL 2 (currently not working).
+- An interactive menu has been added.
+- The script has been revised.
+
+### Known issues
+- "The service has not been started" appeared during testing for no reason. The error may be due to changes applied by [Hardentools](https://github.com/securitywithoutborders/hardentools).
+- **Very** limited functionality.
+
 ## v0.0.1-alpha - 2023-04-29
 
 Initial release.
